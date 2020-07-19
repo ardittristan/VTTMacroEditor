@@ -7,14 +7,12 @@ const scriptLocation = getRunningScript()().replace("main.js", "");
 
 setAceModules([
     ["ace/mode/javascript", "lib/mode-javascript.js"],
-    ["ace/mode/javascript_worker", "lib/worker-javascript.js"],
+    ["ace/mode/javascript_worker", "lib/worker-javascript-edited.js"],
     ["ace/ext/error_marker", "lib/ext-error_marker.js"],
     ["ace/ext/language_tools", "lib/ext-language_tools.js"],
     ["ace/theme/twilight", "lib/theme-twilight.js"],
     ["ace/snippets/javascript", "lib/snippets/javascript.js"]
 ]);
-
-console.log(acemodule);
 
 /**
  * @returns {String} script location
@@ -41,7 +39,7 @@ function setAceModules(stringArray) {
 Hooks.on('renderMacroConfig', function (macroConfig) {
     /** @type {JQuery} */
     const configElement = macroConfig.element;
-    configElement.find('div.form-group.stacked.command').append('<div class="macro-editor" id="macroEditor"></div>');
+    configElement.find('div.form-group.stacked.command').append('<button type="button" class="macro-editor-expand" title="Expand Editor"><i class="fas fa-expand-alt"></i></button><div class="macro-editor" id="macroEditor"></div>');
     if (game.settings.get('macroeditor', 'defaultShow')) {
         configElement.find('.command textarea[name="command"]').css('display', 'none');
 
@@ -52,9 +50,10 @@ Hooks.on('renderMacroConfig', function (macroConfig) {
         }
     } else {
         configElement.find('.macro-editor').css('display', "none");
+        configElement.find('.macro-editor-expand').css('display', "none");
     }
 
-    configElement.find('.sheet-footer').append('<button type="button" class="macro-editor-button" title="Edit in code editor" name="editorButton"><i class="fas fa-terminal"></i></button>');
+    configElement.find('.sheet-footer').append('<button type="button" class="macro-editor-button" title="Toggle Code Editor" name="editorButton"><i class="fas fa-terminal"></i></button>');
 
     let editor = ace.edit("macroEditor");
     editor.setOptions({
@@ -67,12 +66,18 @@ Hooks.on('renderMacroConfig', function (macroConfig) {
         foldStyle: "markbegin"
     });
 
+    if (game.settings.get('macroeditor', 'lineWrap')) {
+        editor.getSession().setUseWrapMode(true);
+    } else {
+        editor.getSession().setUseWrapMode(false);
+    }
 
     configElement.find('.macro-editor-button').on('click', (event) => {
         event.preventDefault();
         if (configElement.find('.macro-editor').css('display') == 'none') {
             configElement.find('.command textarea[name="command"]').css('display', 'none');
-            configElement.find('.macro-editor').css('display', 'unset');
+            configElement.find('.macro-editor').css('display', '');
+            configElement.find('.macro-editor-expand').css('display', "");
             editor.setValue(configElement.find('.command textarea[name="command"]').val(), -1);
 
             // furnace compat
@@ -82,16 +87,34 @@ Hooks.on('renderMacroConfig', function (macroConfig) {
             }
 
         } else {
-            configElement.find('.command textarea[name="command"]').css('display', 'inline-block');
+            configElement.find('.command textarea[name="command"]').css('display', '');
             configElement.find('.macro-editor').css('display', 'none');
+            configElement.find('.macro-editor-expand').css('display', "none");
 
             // furnace compat
             const furnace = configElement.find('div.furnace-macro-command');
             if (furnace.length !== 0) {
-                furnace.css('display', 'flex');
+                furnace.css('display', '');
                 furnace.trigger('change');
             }
 
+        }
+    });
+
+    configElement.find('.macro-editor-expand').on('click', (event) => {
+        event.preventDefault();
+        if (configElement.find('.macro-editor').hasClass('fullscreen')) {
+            configElement.find('.macro-editor').removeClass('fullscreen');
+            configElement.find('.macro-editor-expand').removeClass('fullscreen');
+            configElement.find('.macro-editor-expand').prop('title', 'Expand Editor');
+            configElement.find('.macro-editor-expand i.fas.fa-compress-alt').attr('class', 'fas fa-expand-alt');
+            configElement.find('.window-resizable-handle').css('display', '');
+        } else {
+            configElement.find('.macro-editor').addClass('fullscreen');
+            configElement.find('.macro-editor-expand').addClass('fullscreen');
+            configElement.find('.macro-editor-expand').prop('title', 'Shrink Editor');
+            configElement.find('.macro-editor-expand i.fas.fa-expand-alt').attr('class', 'fas fa-compress-alt');
+            configElement.find('.window-resizable-handle').css('display', 'none');
         }
     });
 
@@ -115,6 +138,8 @@ Hooks.on('renderMacroConfig', function (macroConfig) {
         exec: () => configElement.find('button.execute').trigger('click')
     });
 
+
+    // watch for resizing of editor
     new ResizeObserver(() => {
         editor.resize(); editor.renderer.updateFull();
     }).observe(editor.container);
@@ -127,6 +152,14 @@ Hooks.once('init', function () {
     game.settings.register('macroeditor', 'defaultShow', {
         name: "Show Macro editor by default",
         hint: "Shows the code editor by default instead of the default editor",
+        default: true,
+        type: Boolean,
+        scope: "client",
+        config: true
+    });
+
+    game.settings.register('macroeditor', 'lineWrap', {
+        name: "Wrap lines?",
         default: true,
         type: Boolean,
         scope: "client",
