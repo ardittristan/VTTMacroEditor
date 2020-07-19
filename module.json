@@ -1,0 +1,17 @@
+{
+	"name": "macroeditor",
+	"title": "Macro Editor",
+	"description": "Better code editor for macros.",
+	"version": "1.0.0",
+	"author": "ardittristan#0001",
+	"esmodules": ["main.js"],
+	"styles": [
+		"css/macro-editor.css"
+	],
+	 "socket": true,
+    "url": "https://github.com/ardittristan/VTTMacroEditor",
+    "manifest": "https://raw.githubusercontent.com/ardittristan/VTTMacroEditor/master/module.json",
+    "download": "https://github.com/ardittristan/VTTMacroEditor/archive/master.zip",
+	"minimumCoreVersion": "0.5.5",
+	"compatibleCoreVersion": "0.7.0"
+}

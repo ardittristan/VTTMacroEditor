@@ -1,0 +1,11 @@
+.macro-editor-button {
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    flex-basis: 32px !important;
+    border-radius: 5px;
+}
+
+.macro-editor {
+    width: 100%;
+    height: calc(100% - 2rem);
+}
