@@ -10,8 +10,8 @@
 	],
 	 "socket": true,
     "url": "https://github.com/ardittristan/VTTMacroEditor",
-    "manifest": "https://raw.githubusercontent.com/ardittristan/VTTMacroEditor/master/module.json",
-    "download": "https://github.com/ardittristan/VTTMacroEditor/archive/master.zip",
+    "manifest": "https://raw.githubusercontent.com/ardittristan/VTTMacroEditor/1.0.3/module.json",
+    "download": "https://github.com/ardittristan/VTTMacroEditor/releases/download/1.0.3/macro-editor.zip",
 	"minimumCoreVersion": "0.5.5",
 	"compatibleCoreVersion": "0.7.0"
 }
