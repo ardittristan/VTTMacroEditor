@@ -3,7 +3,7 @@ import * as acemodule from "./lib/ace.js";
 /* -------------< Ace multi module compat >------------ */
 
 /** @type {String} */
-const scriptLocation = getRunningScript()().replace("main.js", "");
+const scriptLocation = getRunningScript()().replace("editor.js", "");
 
 setAceModules([
     ["ace/mode/javascript", "lib/mode-javascript.js"],

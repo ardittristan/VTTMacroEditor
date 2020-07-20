@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.0.2
+
+* Fix filename breaking module
+
 ## Version 1.0.1
 
 * Add fullscreen button.
