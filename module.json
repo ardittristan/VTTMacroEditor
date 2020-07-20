@@ -2,7 +2,7 @@
 	"name": "macroeditor",
 	"title": "Macro Editor",
 	"description": "Better code editor for macros.",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"author": "ardittristan#0001",
 	"esmodules": ["editor.js"],
 	"styles": [

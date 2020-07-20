@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.0.4
+
+* Fix editor not working on multiple windows at once.
+
 ## Version 1.0.3
 
 * Fix editor not loading modules

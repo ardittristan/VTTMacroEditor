@@ -41,7 +41,7 @@ function setAceModules(stringArray) {
 Hooks.on('renderMacroConfig', function (macroConfig) {
     /** @type {JQuery} */
     const configElement = macroConfig.element;
-    configElement.find('div.form-group.stacked.command').append('<button type="button" class="macro-editor-expand" title="Expand Editor"><i class="fas fa-expand-alt"></i></button><div class="macro-editor" id="macroEditor"></div>');
+    configElement.find('div.form-group.stacked.command').append(`<button type="button" class="macro-editor-expand" title="Expand Editor"><i class="fas fa-expand-alt"></i></button><div class="macro-editor" id="macroEditor-${macroConfig.object.id}"></div>`);
     if (game.settings.get('macroeditor', 'defaultShow')) {
         configElement.find('.command textarea[name="command"]').css('display', 'none');
 
@@ -57,7 +57,7 @@ Hooks.on('renderMacroConfig', function (macroConfig) {
 
     configElement.find('.sheet-footer').append('<button type="button" class="macro-editor-button" title="Toggle Code Editor" name="editorButton"><i class="fas fa-terminal"></i></button>');
 
-    let editor = ace.edit("macroEditor");
+    let editor = ace.edit(`macroEditor-${macroConfig.object.id}`);
     editor.setOptions({
         mode: "ace/mode/javascript",
         theme: "ace/theme/twilight",
