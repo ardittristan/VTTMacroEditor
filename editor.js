@@ -5,11 +5,12 @@ import * as acemodule from "./lib/ace.js";
 /** @type {String} */
 const scriptLocation = getRunningScript()().replace("editor.js", "");
 
+
 setAceModules([
     ["ace/mode/javascript", "lib/mode-javascript.js"],
+    ["ace/ext/language_tools", "lib/ext-language_tools.js"],
     ["ace/mode/javascript_worker", "lib/worker-javascript-edited.js"],
     ["ace/ext/error_marker", "lib/ext-error_marker.js"],
-    ["ace/ext/language_tools", "lib/ext-language_tools.js"],
     ["ace/theme/twilight", "lib/theme-twilight.js"],
     ["ace/snippets/javascript", "lib/snippets/javascript.js"]
 ]);
@@ -28,6 +29,7 @@ function getRunningScript() {
 function setAceModules(stringArray) {
     stringArray.forEach((data) => {
         ace.config.setModuleUrl(data[0], scriptLocation.concat(data[1]));
+        ace.config.loadModule(data[0])
     });
 }
 
@@ -60,10 +62,10 @@ Hooks.on('renderMacroConfig', function (macroConfig) {
         mode: "ace/mode/javascript",
         theme: "ace/theme/twilight",
         showPrintMargin: false,
+        foldStyle: "markbegin",
         enableBasicAutocompletion: true,
         enableSnippets: true,
-        enableLiveAutocompletion: true,
-        foldStyle: "markbegin"
+        enableLiveAutocompletion: true
     });
 
     if (game.settings.get('macroeditor', 'lineWrap')) {

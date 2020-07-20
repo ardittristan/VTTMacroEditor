@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.0.3
+
+* Fix editor not loading modules
+
 ## Version 1.0.2
 
 * Fix filename breaking module
