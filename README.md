@@ -1,3 +1,5 @@
+![GitHub Releases](https://img.shields.io/github/downloads/ardittristan/VTTMacroEditor/latest/total)
+
 # VTT Macro Editor
 
 Adds a code editor to the macro edit view.
