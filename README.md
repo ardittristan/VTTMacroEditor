@@ -1,4 +1,4 @@
-![GitHub Releases](https://img.shields.io/github/downloads/ardittristan/VTTMacroEditor/latest/total)
+![GitHub All Releases](https://img.shields.io/github/downloads/ardittristan/VTTMacroEditor/total)
 
 # VTT Macro Editor
 
