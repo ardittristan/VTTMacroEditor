@@ -1,47 +1,47 @@
 .macro-editor-button {
-    flex-grow: 0 !important;
-    flex-shrink: 0 !important;
-    flex-basis: 32px !important;
-    border-radius: 5px;
+  flex-grow: 0 !important;
+  flex-shrink: 0 !important;
+  flex-basis: 32px !important;
+  border-radius: 5px;
 }
 
 .macro-editor {
-    width: 100%;
-    height: calc(100% - 2rem);
+  width: 100%;
+  height: calc(100% - 2rem);
 }
 
 .macro-editor.fullscreen {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: calc(100% - 10rem);
-    height: calc(100% - 10rem);
-    margin: 5rem;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: calc(100% - 10rem);
+  height: calc(100% - 10rem);
+  margin: 5rem;
 }
 
 .macro-editor-expand {
-    position: absolute;
-    filter: opacity(0.4);
-    border-radius: .5em;
-    height: 2em;
-    width: 2em;
-    margin-left: calc(100% - 3.4em);
-    margin-top: 2.3em;
-    z-index: 199;
-    background: url(/ui/parchment.jpg);
-    float: right;
-    padding: unset;
+  position: absolute;
+  filter: opacity(0.4);
+  border-radius: 0.5em;
+  height: 2em;
+  width: 2em;
+  margin-left: calc(100% - 3.4em);
+  margin-top: 2.3em;
+  z-index: 199;
+  background: url(/ui/parchment.jpg);
+  float: right;
+  padding: unset;
 }
 
 .macro-editor-expand.fullscreen {
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    margin-left: calc(100% - 7.1rem);
-    margin-top: 5.3rem;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  margin-left: calc(100% - 7.1rem);
+  margin-top: 5.3rem;
 }
 
 .macro-editor-expand i.fas.fa-expand-alt,
 .macro-editor-expand i.fas.fa-compress-alt {
-    margin: unset;
+  margin: unset;
 }
