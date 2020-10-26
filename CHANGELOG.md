@@ -1,5 +1,10 @@
 # Patch Notes
 
+## Version 1.0.6
+
+* Fix firefox ace editor compatibility.
+* Fix css for expand button.
+
 ## Version 1.0.5
 
 * Push compatible core version.
