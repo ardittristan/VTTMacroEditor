@@ -19,14 +19,18 @@
   margin: 5rem;
 }
 
+.macro-sheet .form-group.stacked.command {
+  position: relative;
+}
+
 .macro-editor-expand {
   position: absolute;
   filter: opacity(0.4);
   border-radius: 0.5em;
   height: 2em;
   width: 2em;
-  margin-left: calc(100% - 3.4em);
-  margin-top: 2.3em;
+  top: 2.3em;
+  right: 0;
   z-index: 199;
   background: url(/ui/parchment.jpg);
   float: right;
