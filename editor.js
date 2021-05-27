@@ -1,46 +1,10 @@
-import * as acemodule from "./lib/ace.js";
+// import * as acemodule from "./lib/ace.js";
 
-/* -------------< Ace multi module compat >------------ */
-
-/** @type {String} */
-const scriptLocation = getRunningScript()().replace("editor.js", "");
-
-setAceModules([
-  ["ace/mode/javascript", "lib/mode-javascript.js"],
-  ["ace/ext/language_tools", "lib/ext-language_tools.js"],
-  ["ace/mode/javascript_worker", "lib/worker-javascript-edited.js"],
-  ["ace/ext/error_marker", "lib/ext-error_marker.js"],
-  ["ace/theme/twilight", "lib/theme-twilight.js"],
-  ["ace/snippets/javascript", "lib/snippets/javascript.js"],
-]);
-
-/**
- * @returns {String} script location
- */
-function getRunningScript() {
-  return () => {
-    return new Error().stack.match(/([^ \n])*([a-z]*:\/\/\/?)*?[a-z0-9\/\\]*\.js/gi)[0];
-  };
-}
-function loadScript(path) {
-  const s = document.createElement("script");
-  s.src = path;
-  $(document.head).append(s);
-}
-
-/**
- * @param  {String[]} stringArray
- */
-function setAceModules(stringArray) {
-  stringArray.forEach((data) => {
-    ace.config.setModuleUrl(data[0], scriptLocation.concat(data[1]));
-    // ace.config.loadModule(data[0])
-    // firefox workaround
-    loadScript(ace.config.moduleUrl(data[0]).replace("getRunningScript/<@", ""));
-  });
-}
-
-/* -------------< End Ace multi module compat >------------ */
+/* -------------< Ace >------------ */
+Hooks.once("init", () => {
+  ["ace/mode/javascript", "ace/ext/language_tools", "ace/ext/error_marker", "ace/theme/twilight", "ace/snippets/javascript"].forEach((s) => ace.config.loadModule(s));
+});
+/* -------------< End Ace >------------ */
 
 Hooks.on("renderMacroConfig", function (macroConfig) {
   /** @type {JQuery} */
