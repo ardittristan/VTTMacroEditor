@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.0.8
+
+- Merge acelib settings.
+
 ## Version 1.0.7
 
 - Switch to acelib.
