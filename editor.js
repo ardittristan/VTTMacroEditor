@@ -32,21 +32,11 @@ Hooks.on("renderMacroConfig", function (macroConfig) {
     .append('<button type="button" class="macro-editor-button" title="Toggle Code Editor" name="editorButton"><i class="fas fa-terminal"></i></button>');
 
   let editor = ace.edit(`macroEditor-${macroConfig.object.id}`);
-  editor.setOptions({
+  // Merge ace-lib user-settings with module settings
+  editor.setOptions(mergeObject(ace.userSettings, {
     mode: "ace/mode/javascript",
-    theme: "ace/theme/twilight",
-    showPrintMargin: false,
-    foldStyle: "markbegin",
-    enableBasicAutocompletion: true,
-    enableSnippets: true,
-    enableLiveAutocompletion: true,
-  });
-
-  if (game.settings.get("macroeditor", "lineWrap")) {
-    editor.getSession().setUseWrapMode(true);
-  } else {
-    editor.getSession().setUseWrapMode(false);
-  }
+    wrap: game.settings.get("macroeditor", "lineWrap"),
+  }));
 
   configElement.find(".macro-editor-button").on("click", (event) => {
     event.preventDefault();
