@@ -32,11 +32,27 @@ Hooks.on("renderMacroConfig", function (macroConfig) {
     .append('<button type="button" class="macro-editor-button" title="Toggle Code Editor" name="editorButton"><i class="fas fa-terminal"></i></button>');
 
   let editor = ace.edit(`macroEditor-${macroConfig.object.id}`);
+
+  editor.session.on("changeMode", function (e, session) {
+    if ("ace/mode/javascript" === session.getMode().$id) {
+      if (!!session.$worker) {
+        session.$worker.send("setOptions", [
+          {
+            esversion: 9,
+            esnext: false,
+          },
+        ]);
+      }
+    }
+  });
+
   // Merge ace-lib user-settings with module settings
-  editor.setOptions(mergeObject(ace.userSettings, {
-    mode: "ace/mode/javascript",
-    wrap: game.settings.get("macroeditor", "lineWrap"),
-  }));
+  editor.setOptions(
+    mergeObject(ace.userSettings, {
+      mode: "ace/mode/javascript",
+      wrap: game.settings.get("macroeditor", "lineWrap"),
+    })
+  );
 
   configElement.find(".macro-editor-button").on("click", (event) => {
     event.preventDefault();

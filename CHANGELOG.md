@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.0.9
+
+- Fix esversion being wrong.
+
 ## Version 1.0.8
 
 - Merge acelib settings.
