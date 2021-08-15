@@ -8,14 +8,23 @@
   "flags": {},
   "version": "1.0.9",
   "minimumCoreVersion": "0.5.5",
-  "compatibleCoreVersion": "0.8.5",
+  "compatibleCoreVersion": "0.8.8",
   "scripts": [],
-  "esmodules": ["editor.js"],
-  "styles": ["css/macro-editor.css"],
+  "esmodules": [
+    "editor.js"
+  ],
+  "styles": [
+    "css/macro-editor.css"
+  ],
   "languages": [],
   "packs": [],
   "system": [],
-  "dependencies": [{ "name": "acelib" }],
+  "dependencies": [
+    {
+      "name": "acelib",
+      "type": "module"
+    }
+  ],
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/ardittristan/VTTMacroEditor/master/module.json",
   "download": "https://github.com/ardittristan/VTTMacroEditor/releases/latest/download/macro-editor.zip",
