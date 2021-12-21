@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.1.0
+
+- Update for V9.
+
 ## Version 1.0.9
 
 - Fix esversion being wrong.

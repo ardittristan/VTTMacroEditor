@@ -4,14 +4,10 @@ Hooks.once("init", () => {
 });
 /* -------------< End Ace >------------ */
 
-Hooks.on("preDocumentSheetRegistrarInit", (settings) => {
-  settings["Macro"] = true;
-});
-
-Hooks.on("documentSheetRegistrarInit", () => {
+Hooks.on("init", () => {
   Macros.registerSheet?.("macroeditor", AceMacroConfig, {
     makeDefault: true,
-    label: "test",
+    label: "Ace Macro Editor",
     types: ["script", "chat"],
   });
 });
@@ -28,12 +24,6 @@ class AceMacroConfig extends MacroConfig {
       );
     if (game.settings.get("macroeditor", "defaultShow")) {
       configElement.find('.command textarea[name="command"]').css("display", "none");
-
-      // furnace compat
-      const furnace = configElement.find("div.furnace-macro-command");
-      if (furnace.length !== 0) {
-        furnace.css("display", "none");
-      }
     } else {
       configElement.find(".macro-editor").css("display", "none");
       configElement.find(".macro-editor-expand").css("display", "none");
@@ -72,23 +62,10 @@ class AceMacroConfig extends MacroConfig {
         configElement.find(".macro-editor").css("display", "");
         configElement.find(".macro-editor-expand").css("display", "");
         this.editor.setValue(configElement.find('.command textarea[name="command"]').val(), -1);
-
-        // furnace compat
-        const furnace = configElement.find("div.furnace-macro-command");
-        if (furnace.length !== 0) {
-          furnace.css("display", "none");
-        }
       } else {
         configElement.find('.command textarea[name="command"]').css("display", "");
         configElement.find(".macro-editor").css("display", "none");
         configElement.find(".macro-editor-expand").css("display", "none");
-
-        // furnace compat
-        const furnace = configElement.find("div.furnace-macro-command");
-        if (furnace.length !== 0) {
-          furnace.css("display", "");
-          furnace.trigger("change");
-        }
       }
     });
 
