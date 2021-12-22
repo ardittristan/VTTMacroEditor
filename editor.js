@@ -8,7 +8,7 @@ Hooks.on("init", () => {
   Macros.registerSheet?.("macroeditor", AceMacroConfig, {
     makeDefault: true,
     label: "Ace Macro Editor",
-    types: ["script", "chat"],
+    // types: ["script", "chat"],
   });
 });
 
@@ -144,4 +144,17 @@ Hooks.once("init", function () {
     scope: "client",
     config: true,
   });
+});
+
+// Item Macro Compat
+Hooks.once("init", async function () {
+  // only trigger if item macro is active and the compatible version isn't V9 yet
+  if (!game.modules.get("itemacro")?.active || game.modules.get("itemacro")?.data?.compatibleCoreVersion?.match(/\./g)?.length !== 2) return;
+
+  let classLoc = game.modules.get("itemacro")?.esmodules?.[0]?.replace("hooks", "ItemMacroConfig");
+  if (classLoc) {
+    let theClass = (await import(window.location.origin + "/" + classLoc)).ItemMacroConfig;
+    theClass.prototype._render = AceMacroConfig.prototype._render;
+    theClass.prototype.close = AceMacroConfig.prototype.close;
+  }
 });

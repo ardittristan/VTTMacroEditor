@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.1.2
+
+- Temporary patch for Item Macro until it updates.
+
 ## Version 1.1.1
 
 - Compat for non-V9 modules (eg advanced macros)
