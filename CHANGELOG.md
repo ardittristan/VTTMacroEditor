@@ -1,5 +1,9 @@
 # Patch Notes
 
+## Version 1.1.1
+
+- Compat for non-V9 modules (eg advanced macros)
+
 ## Version 1.1.0
 
 - Update for V9.

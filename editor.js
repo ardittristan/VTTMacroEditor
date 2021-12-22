@@ -13,9 +13,10 @@ Hooks.on("init", () => {
 });
 
 class AceMacroConfig extends MacroConfig {
-  /** @param {JQuery} configElement */
-  activateListeners(configElement) {
-    super.activateListeners(configElement);
+  async _render(...args) {
+    await super._render(...args);
+
+    const configElement = this.element;
 
     configElement
       .find("div.form-group.stacked.command")
@@ -24,6 +25,10 @@ class AceMacroConfig extends MacroConfig {
       );
     if (game.settings.get("macroeditor", "defaultShow")) {
       configElement.find('.command textarea[name="command"]').css("display", "none");
+      const furnace = this.element.find("div.furnace-macro-command");
+      if (furnace.length !== 0) {
+        furnace.css("display", "none");
+      }
     } else {
       configElement.find(".macro-editor").css("display", "none");
       configElement.find(".macro-editor-expand").css("display", "none");
@@ -33,7 +38,7 @@ class AceMacroConfig extends MacroConfig {
       .find(".sheet-footer")
       .append('<button type="button" class="macro-editor-button" title="Toggle Code Editor" name="editorButton"><i class="fas fa-terminal"></i></button>');
 
-    this.editor = ace.edit(`macroEditor-${this.object.id}`);
+    let editor = (this.editor = ace.edit(`macroEditor-${this.object.id}`));
 
     this.editor.session.on("changeMode", function (e, session) {
       if ("ace/mode/javascript" === session.getMode().$id) {
@@ -62,10 +67,23 @@ class AceMacroConfig extends MacroConfig {
         configElement.find(".macro-editor").css("display", "");
         configElement.find(".macro-editor-expand").css("display", "");
         this.editor.setValue(configElement.find('.command textarea[name="command"]').val(), -1);
+
+        // furnace compat / advanced macros
+        const furnace = configElement.find("div.furnace-macro-command");
+        if (furnace.length !== 0) {
+          furnace.css("display", "none");
+        }
       } else {
         configElement.find('.command textarea[name="command"]').css("display", "");
         configElement.find(".macro-editor").css("display", "none");
         configElement.find(".macro-editor-expand").css("display", "none");
+
+        // furnace compat / advanced macros
+        const furnace = configElement.find("div.furnace-macro-command");
+        if (furnace.length !== 0) {
+          furnace.css("display", "");
+          furnace.trigger("change");
+        }
       }
     });
 
@@ -89,7 +107,7 @@ class AceMacroConfig extends MacroConfig {
     this.editor.setValue(configElement.find('textarea[name="command"]').val(), -1);
 
     this.editor.getSession().on("change", () => {
-      configElement.find('textarea[name="command"]').val(this.editor.getSession().getValue());
+      configElement.find('textarea[name="command"]').val(editor.getSession().getValue());
     });
 
     this.editor.commands.addCommand({
@@ -106,8 +124,8 @@ class AceMacroConfig extends MacroConfig {
 
     // watch for resizing of editor
     new ResizeObserver(() => {
-      this.editor.resize();
-      this.editor.renderer.updateFull();
+      editor.resize();
+      editor.renderer.updateFull();
     }).observe(this.editor.container);
   }
 
